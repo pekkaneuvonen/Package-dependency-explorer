@@ -4,6 +4,17 @@
   "private": true,
   "homepage": ".",
   "main": "build/electron/main.js",
+  "author": "Pekka Neuvonen",
+  "description": "React-TypeScript-Electron desktop app exercise",
+  "build": {
+    "extends": null,
+    "files": [
+      "build/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -22,6 +33,9 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "electron:dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
+    "electron:build": "yarn build && tsc -p electron && electron-builder",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
