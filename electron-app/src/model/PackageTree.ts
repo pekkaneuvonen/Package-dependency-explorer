@@ -18,7 +18,11 @@ export class Package {
 			this.id = id;
 			this.data = data;
 			this.fields = fields;
-    }
+		}
+		
+		getDescription = () => {
+			return this.fields.find(field => field.name === "Description");
+		}
 }
 export class Pointer {
 	id: string;

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { packageRootFromFile } from './FileController';
 import * as path from 'path';
 
-import './App.css';
+import './App.scss';
 import Header from './components/Header';
 import PackageView from './components/PackageView';
 import { tempHCmock } from './assets/Sample';
-import PackageTree from './model/PackageTree';
+import PackageTree, { Package } from './model/PackageTree';
 
 const remote = window.require('electron').remote;
 
@@ -45,7 +45,7 @@ switch (remote.process.platform) {
     break;
 }
 
-export default class App extends Component <{}, {packageTree: PackageTree, breadcrumbs: string[]}> {
+export default class App extends Component <{}, {packageTree: PackageTree, currentPackage?: Package, breadcrumbs: string[]}> {
     constructor(props: any) {
         super(props)
           this.state = {
@@ -64,15 +64,22 @@ export default class App extends Component <{}, {packageTree: PackageTree, bread
       })
     }
 
+    getPackage = (id: string) => {
+      return this.state.packageTree.structure.find(pkg => pkg.id === id);
+    }
     crumbClickHandler = (crumbId: string) => {
       console.log("crumbClicHandler : ", crumbId)
     }
-
+    packageClickHandler = (packageId: string) => {
+      console.log("packageClickHandler : ", packageId);
+      const pkg = this.getPackage(packageId);
+      this.setState({currentPackage: pkg})
+    }
     render() {
       return (
         <div className="App">
           <Header breadcrumbs={this.state.breadcrumbs} crumbClickHandler={this.crumbClickHandler} platform={currentPlatform} />
-          <PackageView pkgTree={this.state.packageTree}/>
+          <PackageView pkgTree={this.state.packageTree} packageClickHandler={this.packageClickHandler} currentPackage={this.state.currentPackage}/>
         </div>
       )
    }

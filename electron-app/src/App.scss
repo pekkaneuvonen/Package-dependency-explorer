@@ -1,3 +1,8 @@
+
+$header-text-color: #349AA9;
+$package-title-color: #216F7A;
+
+
 .App {
   background-color: #41ACBB;
 }
@@ -25,7 +30,6 @@
   }
 }
 
-
 .Header {
   background-color: #323232;
   position: fixed;
@@ -39,7 +43,7 @@
   align-items: center;
   justify-content: space-evenly;
   font-size: calc(18px + 2vmin);
-  color: #349AA9;
+  color: $header-text-color;
   text-align: center;
 }
 
@@ -71,7 +75,7 @@
 }
 .Header-breadcrumbs-container {
   height: calc(100% - 12.5vh);
-  border-bottom: 1px solid #349AA9;
+  border-bottom: 1px solid $header-text-color;
 }
 
 
@@ -87,7 +91,6 @@
   align-items: center;
   justify-content: space-evenly;
 
-  background-color: rgba(200, 200, 200, 0.2);
 }
 .Tree-column {
   flex: 1;
@@ -107,20 +110,75 @@
 
 .Package {
   background-color: #6EC1CE;
-  padding: 16px;
   margin: 16px;
 }
-.Package-title {
-  background-color: #6EC1CE;
-  padding: 16px;
-  margin: 16px;
 
-  font-style: normal;
-  font-weight: 100;
-  font-size: 2.4vh;
+.Package-title {
+  background-color: $header-text-color;
+  padding: 24px;
+  font: {
+    weight: 100;
+    size: 2.4vh;
+  }
   line-height: 100%;
+  color: #F2F2F2;
 
   display: flex;
   align-items: center;
+}
+.Package-title-button {
+  display: inline-block;
+  width: 100%;
+  border: none;
+  padding: 24px;
+  background-color: #6EC1CE;
+  color: $package-title-color;
+  display: flex;
+  align-items: center;
 
+  font: {
+    weight: 100;
+    size: 2.4vh;
+  }
+  text: {
+    decoration: none;
+    align: left;
+  }
+  cursor: pointer;
+  transition: background 250ms ease-in-out, 
+    transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:hover, :focus {
+    background: #7ccfdb;
+  }
+  &:focus {
+    outline: 1px solid #4d99a5;
+  }
+  &:active {
+    transform: scale(0.99);
+  }
+  
+}
+
+.packageIcon {
+  width: 3vh;
+  height: 3vh;
+  margin-right: 16px;
+
+  fill: whitesmoke;
+}
+
+.Package-description {
+  padding: 24px;
+  padding-top: 16px;
+  
+  font: {
+    weight: bold;
+    size: 1.5vh;
+  }
+  line-height: 150%;
+
+  color: $package-title-color;
 }
