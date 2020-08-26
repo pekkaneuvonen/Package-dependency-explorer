@@ -55,7 +55,7 @@ export default class App extends Component <{}, {packageTree: PackageTree, curre
     }
 
     componentDidMount() {
-      packageRootFromFile(path.resolve("/var/lib/dpkg/"), "status.real")
+      packageRootFromFile(path.resolve("var/lib/dpkg"), "status.real")
       .then(result => {
         this.setState({packageTree: new PackageTree(result)})
       }).catch(err => {

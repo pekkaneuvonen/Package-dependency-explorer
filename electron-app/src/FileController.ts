@@ -20,7 +20,7 @@ const listDir = (dirPath: string) => {
 		try {
 			const files = await rendererFsPromises.readdir( dirPath );
 			for ( const file of files ) {
-				console.log( "file: ", dirPath, " / ", file );
+				console.log( "file: ", dirPath, " -- ", file );
 			}
 		}
 		catch ( e ) {
@@ -35,17 +35,17 @@ const getPackageRoot = (statusFilePath: string, statusFileName: string): Promise
 	const pathToLocalAsset = path.resolve(statusFilePath, statusFileName);
 	const mockAsset = path.resolve(mockDataDir, statusFileName);
 	
-	const homeDir1 = path.resolve('home');
-	console.log(" user home dir 1: ", homeDir1);
-	listDir(homeDir1);
+	// const homeDir1 = path.resolve('home');
+	// console.log(" user home dir 1: ", homeDir1);
+	// listDir(homeDir1);
 
-	const homedir2 = require('os').homedir();
-	console.log(" user home dir 2: ", homedir2);
-	listDir(homedir2);
+	const homedir = require('os').homedir();
+	console.log(" user home dir: ", homedir);
+	listDir(homedir);
 
-	const homePath: string = remote.app.getPath('home');
-	console.log(" user home path: ", homePath);
-	listDir(homePath);
+	// const homePath: string = remote.app.getPath('home');
+	// console.log(" user home path: ", homePath);
+	// listDir(homePath);
 
 	if (rendererFs.existsSync(pathToLocalAsset)) {
 		console.log("local statusFile exists");
