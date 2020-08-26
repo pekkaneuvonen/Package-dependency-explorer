@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  background-color: #41ACBB;
 }
 
 .App-logo {
@@ -12,18 +12,6 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +23,104 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.Header {
+  background-color: #323232;
+  position: fixed;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 28vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: calc(18px + 2vmin);
+  color: #349AA9;
+  text-align: center;
+}
+
+.Header-column {
+  flex: 1;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.Header-column-title {
+  display: flex;
+  margin: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  height: 12.5vh;
+  justify-content: center;
+  align-items: center;
+
+  font-family: Roboto Condensed;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 3vh;
+  line-height: 3vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+}
+.Header-breadcrumbs-container {
+  height: calc(100% - 12.5vh);
+  border-bottom: 1px solid #349AA9;
+}
+
+
+
+.Tree {
+  display: flex;
+  margin: 0;
+  margin-top: 28vh;
+  padding: 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+
+  background-color: rgba(200, 200, 200, 0.2);
+}
+.Tree-column {
+  flex: 1;
+  width: 30vw;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  font-family: Roboto Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.5vh;
+  line-height: 150%;
+  color: #216F7A;
+}
+
+.Package {
+  background-color: #6EC1CE;
+  padding: 16px;
+  margin: 16px;
+}
+.Package-title {
+  background-color: #6EC1CE;
+  padding: 16px;
+  margin: 16px;
+
+  font-style: normal;
+  font-weight: 100;
+  font-size: 2.4vh;
+  line-height: 100%;
+
+  display: flex;
+  align-items: center;
+
 }

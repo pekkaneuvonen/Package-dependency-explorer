@@ -5,15 +5,18 @@ import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-insta
 
 let win: BrowserWindow | null = null;
 
+
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1440,
+    height: 1024,
+    backgroundColor: '#41ACBB',
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true,
     }
   })
-
+  
   if (isDev) {
     win.loadURL('http://localhost:3000/index.html');
   } else {

@@ -1,26 +1,79 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { packageRootFromFile } from './FileController';
+import * as path from 'path';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import Header from './components/Header';
+import PackageView from './components/PackageView';
+import { tempHCmock } from './assets/Sample';
+import PackageTree from './model/PackageTree';
+
+const remote = window.require('electron').remote;
+
+enum PlatformType {
+  win32 = 'WINDOWS',
+  darwin = 'MAC',
+  linux = 'LINUX',
+  sunos = 'SUN',
+  openbsd = 'OPENBSD',
+  android = 'ANDROID',
+  aix = 'AIX',
 }
 
-export default App;
+let currentPlatform: PlatformType = PlatformType.win32;
+switch (remote.process.platform) {
+  case 'win32':
+    currentPlatform = PlatformType.win32;
+    break;
+  case 'darwin':
+    currentPlatform = PlatformType.darwin;
+    break;
+  case 'linux':
+    currentPlatform = PlatformType.linux;
+    break;
+  case 'sunos':
+    currentPlatform = PlatformType.sunos;
+    break;
+  case 'openbsd':
+    currentPlatform = PlatformType.openbsd;
+    break;
+  case 'android':
+    currentPlatform = PlatformType.android;
+    break;
+  case 'aix':
+    currentPlatform = PlatformType.aix;
+    break;
+}
+
+export default class App extends Component <{}, {packageTree: PackageTree, breadcrumbs: string[]}> {
+    constructor(props: any) {
+        super(props)
+          this.state = {
+            breadcrumbs: [],
+            packageTree: new PackageTree("Package: root"),
+          }
+    }
+
+    componentDidMount() {
+      packageRootFromFile(path.resolve("/var/lib/dpkg/"), "status.real")
+      .then(result => {
+        this.setState({packageTree: new PackageTree(result)})
+      }).catch(err => {
+        console.log(err);
+        this.setState({packageTree: new PackageTree(tempHCmock)})
+      })
+    }
+
+    crumbClickHandler = (crumbId: string) => {
+      console.log("crumbClicHandler : ", crumbId)
+    }
+
+    render() {
+      return (
+        <div className="App">
+          <Header breadcrumbs={this.state.breadcrumbs} crumbClickHandler={this.crumbClickHandler} platform={currentPlatform} />
+          <PackageView pkgTree={this.state.packageTree}/>
+        </div>
+      )
+   }
+}

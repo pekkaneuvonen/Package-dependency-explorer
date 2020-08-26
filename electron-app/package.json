@@ -1,16 +1,15 @@
 {
-  "name": "electron-app",
+  "name": "package-dependency-explorer",
+  "appId": "com.electron.${name}",
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
   "main": "build/electron/main.js",
   "author": "Pekka Neuvonen",
+  "copyright": "Copyright © 2020 ${author}",
   "description": "React-TypeScript-Electron desktop app exercise",
   "build": {
     "extends": null,
-    "files": [
-      "build/**/*"
-    ],
     "directories": {
       "buildResources": "assets"
     }
