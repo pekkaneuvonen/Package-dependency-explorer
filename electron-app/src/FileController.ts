@@ -14,26 +14,38 @@ const userDataPath: string = remote.app.getPath('userData');
 const mockDataDir = path.resolve(userDataPath, "mockdata");
 
 
-// const listDir = (dirPath: string) => {
-// 	console.log(" dir list in ", dirPath);
-// 	( async () => {
-// 		try {
-// 			const files = await rendererFsPromises.readdir( dirPath );
-// 			for ( const file of files ) {
-// 				console.log( "file: ", dirPath, " / ", file );
-// 			}
-// 		}
-// 		catch ( e ) {
-// 			console.error( "We've thrown! Whoops!", e );
-// 		}
+const listDir = (dirPath: string) => {
+	console.log(" dir list in ", dirPath);
+	( async () => {
+		try {
+			const files = await rendererFsPromises.readdir( dirPath );
+			for ( const file of files ) {
+				console.log( "file: ", dirPath, " / ", file );
+			}
+		}
+		catch ( e ) {
+			console.error( "We've thrown! Whoops!", e );
+		}
 
-// 	})();
+	})();
 
-// }
+}
 
 const getPackageRoot = (statusFilePath: string, statusFileName: string): Promise<string> => {
 	const pathToLocalAsset = path.resolve(statusFilePath, statusFileName);
 	const mockAsset = path.resolve(mockDataDir, statusFileName);
+	
+	const homeDir1 = path.resolve('home');
+	console.log(" user home dir 1: ", homeDir1);
+	listDir(homeDir1);
+
+	const homedir2 = require('os').homedir();
+	console.log(" user home dir 2: ", homedir2);
+	listDir(homedir2);
+
+	const homePath: string = remote.app.getPath('home');
+	console.log(" user home path: ", homePath);
+	listDir(homePath);
 
 	if (rendererFs.existsSync(pathToLocalAsset)) {
 		console.log("local statusFile exists");
