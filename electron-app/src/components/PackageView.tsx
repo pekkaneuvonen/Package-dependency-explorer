@@ -22,13 +22,13 @@ class PackageView extends React.Component <{pkgTree: PackageTree, currentPackage
 	formatPackageData = (pkgIndx: number, pkgData: Package) => {
 
 		return <div className="Package" key={pkgIndx}>
-				<p className="Package-title" >{pkgData.id}</p>
-				{pkgData.depends ? 
-					pkgData.depends.map((dep: Pointer, depIndx: number) => {
-						return <p key={depIndx}>{`*  ${dep.id}`}</p>
-					})
-				: null}
-			</div>;
+			<p className="Package-title" >{pkgData.id}</p>
+			{pkgData.depends ? 
+				pkgData.depends.map((dep: Pointer, depIndx: number) => {
+					return <p key={depIndx}>{`*  ${dep.id}`}</p>
+				})
+			: null}
+		</div>;
 	}
 	homeview = (pkgIndx: number, pkgData: Package) => {
 

@@ -32,20 +32,14 @@ const listDir = (dirPath: string) => {
 }
 
 const getPackageRoot = (statusFilePath: string, statusFileName: string): Promise<string> => {
-	const pathToLocalAsset = path.resolve(statusFilePath, statusFileName);
-	const mockAsset = path.resolve(mockDataDir, statusFileName);
-	
-	// const homeDir1 = path.resolve('home');
-	// console.log(" user home dir 1: ", homeDir1);
-	// listDir(homeDir1);
-
+	// const pathToLocalAsset = path.resolve(statusFilePath, statusFileName);
 	const homedir = require('os').homedir();
-	console.log(" user home dir: ", homedir);
-	listDir(homedir);
+	const pathToLocalAsset = path.resolve(homedir, statusFilePath, statusFileName);
 
-	// const homePath: string = remote.app.getPath('home');
-	// console.log(" user home path: ", homePath);
-	// listDir(homePath);
+	const mockAsset = path.resolve(mockDataDir, statusFileName);
+
+	// listDir(pathToLocalAsset);
+
 
 	if (rendererFs.existsSync(pathToLocalAsset)) {
 		console.log("local statusFile exists");

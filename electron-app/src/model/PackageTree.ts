@@ -99,7 +99,7 @@ export default class PackageTree {
 
 			// add depends and rev-depends
 			for (const pkg of pkgList) {
-				console.log("pkg ", pkg);
+				// console.log("pkg ", pkg);
 
 				let deps;
 				// go through depends
