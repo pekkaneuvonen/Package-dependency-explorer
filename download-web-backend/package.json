@@ -1,0 +1,11 @@
+{
+  "name": "download-web-backend",
+  "version": "1.0.0",
+  "description": "The back end functionality for serving the Package-dependency-explorer application for different platforms.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pekka Neuvonen",
+  "license": "ISC"
+}
