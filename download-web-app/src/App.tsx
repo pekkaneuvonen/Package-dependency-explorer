@@ -11,7 +11,7 @@ import './App.css';
 function App() {
 
   const downloadPlatform = (platform: string) => {
-    window.open(`http://localhost:3001/download/${platform}`, "_self");
+    window.open(`/download/${platform}`, "_self");
   }
   const platformClick = (platform: string) => {
     console.log("get platform button ", platform);

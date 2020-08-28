@@ -4,25 +4,28 @@ const app = express();
 const cors = require('cors');
 
 app.use(cors());
+app.use(express.static('build'));
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>');
 })
 
 app.get('/download/:platform', (request, res) => {
-  let file;
+  let fileName;
+  console.log("get ", request.params.platform);
   if (request.params.platform === "mac") {
-    file = 'PDE-mac.zip';
+    fileName = 'PDE-mac.zip';
   } else if (request.params.platform === "win") {
-    file = 'PDE.snap';
+    fileName = 'PDE.snap';
   } else if (request.params.platform === "linux") {
-    file = 'PDE.AppImage';
+    fileName = 'PDE.AppImage';
   }
-  if (file) {
-    res.download(`./download/${file}`, (err) => {
+  if (fileName) {
+    res.download(__dirname + '/download/' + fileName, (err) => {
       if (err) {
         // Handle error, but keep in mind the response may be partially-sent
         // so check res.headersSent
+        console.log("err ", err);
       } else {
         // decrement a download credit, etc.
       }

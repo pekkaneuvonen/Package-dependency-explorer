@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6e6ee786.chunk.css",
+    "main.js": "/static/js/main.1a2d65f8.chunk.js",
+    "main.js.map": "/static/js/main.1a2d65f8.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.4987db41.js",
+    "runtime-main.js.map": "/static/js/runtime-main.4987db41.js.map",
+    "static/js/2.24d632c7.chunk.js": "/static/js/2.24d632c7.chunk.js",
+    "static/js/2.24d632c7.chunk.js.map": "/static/js/2.24d632c7.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.cf12dd64d750f40e67a238eb42809eeb.js": "/precache-manifest.cf12dd64d750f40e67a238eb42809eeb.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.6e6ee786.chunk.css.map": "/static/css/main.6e6ee786.chunk.css.map",
+    "static/js/2.24d632c7.chunk.js.LICENSE.txt": "/static/js/2.24d632c7.chunk.js.LICENSE.txt",
+    "static/media/icon.png": "/static/media/icon.5a0b4e77.png",
+    "static/media/linux_logo.svg": "/static/media/linux_logo.64cdaabc.svg",
+    "static/media/mac_logo.svg": "/static/media/mac_logo.914df312.svg",
+    "static/media/win_logo.svg": "/static/media/win_logo.d5402f61.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4987db41.js",
+    "static/js/2.24d632c7.chunk.js",
+    "static/css/main.6e6ee786.chunk.css",
+    "static/js/main.1a2d65f8.chunk.js"
+  ]
+}
