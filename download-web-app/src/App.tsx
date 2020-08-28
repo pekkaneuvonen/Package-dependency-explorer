@@ -8,17 +8,19 @@ import linux_logo from './assets/linux_logo.svg';
 
 import './App.css';
 
+const baseUrl: string = 'https://package-explorer-download.herokuapp.com/';
+
 function App() {
 
-  const downloadPlatform = (platform: string) => {
-    window.open(`/download/${platform}`, "_self");
-  }
-  const platformClick = (platform: string) => {
-    console.log("get platform button ", platform);
-    return (event: any) => {
-      downloadPlatform(platform);
-    }
-  }
+  // const downloadPlatform = (platform: string) => {
+  //   window.open(`/download/${platform}`, "_self");
+  // }
+  // const platformClick = (platform: string) => {
+  //   console.log("get platform button ", platform);
+  //   return (event: any) => {
+  //     downloadPlatform(platform);
+  //   }
+  // }
   return (
     <div className="App">
       <header className="App-header">
@@ -30,9 +32,9 @@ function App() {
           Select your platform.
         </p>
         <div className="linkContainer">
-          <img className="icon_button" src={mac_logo} alt={"mac os x icon"} onClick={platformClick('mac')} />
-          <img className="icon_button" src={win_logo} alt={"windows icon"} onClick={platformClick('win')} />
-          <img className="icon_button" src={linux_logo} alt={"linux icon"} onClick={platformClick('linux')} />
+          <button className="icon_button"><a href={`${baseUrl}download/mac`} download="package-dependency-explorer.zip"><img className="icon" src={mac_logo} alt={"mac os x icon"} /></a></button>
+          <button className="icon_button"><a href={`${baseUrl}download/win`} download="package-dependency-explorer.snap"><img className="icon" src={win_logo} alt={"windows icon"} /></a></button>
+          <button className="icon_button"><a href={`${baseUrl}download/linux`} download="package-dependency-explorer.AppImage"><img className="icon" src={linux_logo} alt={"linux icon"} /></a></button>
         </div>
       </header>
     </div>

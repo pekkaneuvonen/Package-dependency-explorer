@@ -43,14 +43,28 @@ p {
   align-content: center;
 }
 .icon_button {
-  width: 3vw;
-  height: 3vw;
+  border: none;
   min-width: 48px;
   min-height: 48px;
   margin: 12px;
   padding: 16px;
   border-radius: 8px;
   cursor: pointer;
+  background-color: transparent;
+
+}
+.icon_button:focus {
+  outline: none;
+}
+.icon {
+  width: 3vw;
+  height: 3vw;
+  /* min-width: 48px;
+  min-height: 48px;
+  margin: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer; */
 }
 .icon_button:hover {
   transition: background-color 0.5s ease;
