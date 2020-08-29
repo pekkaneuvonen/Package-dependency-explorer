@@ -13,11 +13,13 @@ export class Package {
 	fields: Field[];
 	depends?: Pointer[];
 	revDepends?: Pointer[];
+	rootPointer: Pointer;
 
   constructor (id: string, data: string, fields: Field[]) {
 		this.id = id;
 		this.data = data;
 		this.fields = fields;
+		this.rootPointer = new Pointer(this.id, true, false, false);
 	}
 	
 	getDescription = () => {
@@ -27,10 +29,14 @@ export class Package {
 export class Pointer {
 	id: string;
 	enabled: boolean;
-	
-	constructor (id: string, enabled: boolean) {
+	alternative: boolean;
+	reverse: boolean;
+
+	constructor (id: string, enabled: boolean, alternative: boolean, reverse: boolean) {
 		this.id = id;
 		this.enabled = enabled;
+		this.alternative = alternative;
+		this.reverse = reverse;
 	}
 }
 
@@ -81,7 +87,7 @@ export default class PackageTree {
 
 			// construct the list of packages
 			const pkgList: Package[] = paragraphList.map((paragraph: string, index: number) => {
-					return this.getPackage(paragraph);
+				return this.getPackage(paragraph);
 			})
 
 			// sort alphabetically
@@ -96,7 +102,7 @@ export default class PackageTree {
 			});
 
 
-			// add depends and rev-depends
+			// add depends and rev-depends for every package
 			for (const pkg of pkgList) {
 				// console.log("pkg ", pkg);
 
@@ -105,50 +111,66 @@ export default class PackageTree {
 				const foundDeps = pkg.fields.find(field => field.name === "Depends");
 				if (foundDeps) {
 					// separate packages and alternative packages
-					const depsRaw = foundDeps.value.split(',').map((dep: string, index: number) => {
-						return dep.split('|');
+					deps = foundDeps.value.split(',').map((dep: string, index: number) => {
+						return dep.split('|').map((alternative: string, altIndx: number) => {
+							// trim whitespaces and skip versions
+							return new Pointer(alternative.trim().split(/\s/)[0], true, dep.indexOf('|') > -1, false);
+						});
 					});
 
-					// trim whitespaces and versions and add to 'deps'
-					deps = depsRaw.flat().map((dep: string, index: number) => {
-						return dep.trim().split(/\s/)[0];
-					});
+					// flat all to one level
+					deps = deps.flat();
 				}
 
 				// go through pre-depends
 				const foundPreDeps = pkg.fields.find(field => field.name === "Pre-Depends");
 				if (foundPreDeps) {
 					// separate packages and alternative packages
-					const predepsRaw = foundPreDeps.value.split(',').map((predep: string, index: number) => {
-						return predep.split('|');
+					const predeps = foundPreDeps.value.split(',').map((predep: string, index: number) => {
+						return predep.split('|').map((alternative: string, altIndx: number) => {
+							// trim whitespaces and skip versions
+							return new Pointer(alternative.trim().split(/\s/)[0], true, predep.indexOf('|') > -1, false);
+						});
 					});
-					// trim whitespaces and versions and add to 'deps'
-					deps = predepsRaw.flat().map((predep: string, index: number) => {
-						return predep.trim().split(/\s/)[0];
-					});
+
+					// flat and combine to normal deps
+					deps ? deps.concat(predeps.flat()) : predeps.flat();
 				}
 
+				// go through dependencies
 				if (deps) {
 					deps.forEach(dep => {
 						if (!pkg.depends) {
 							pkg.depends = [];
 						}
-						const depTarget = pkgList.find(depPkg => depPkg.id === dep);
-						if (depTarget) {
-							if (!depTarget.revDepends) {
-								depTarget.revDepends = [];
+
+						// check for duplicates, some dependencies are mentioned several times for different version numbers
+						if (pkg.depends.find(pointer => pointer.id === dep.id)) {
+							// already on deps list
+						} else {
+							// list self as a rev-dep on all dep-packages found on root pkgList  
+							const depTarget = pkgList.find(depPkg => depPkg.id === dep.id);
+							if (depTarget) {
+								if (!depTarget.revDepends) {
+									depTarget.revDepends = [];
+								}
+								// check for duplicates, just in case
+								if (depTarget.revDepends.find(revDepPointer => revDepPointer.id === pkg.id)) {
+									// already on targets rev-dep list?
+								} else {
+									const rev_depLink: Pointer = new Pointer(pkg.id, true, false, true);
+									depTarget.revDepends.push(rev_depLink);
+								}
+							} else {
+								// mark dependency as disabled if link target not found  
+								dep.enabled = false;
 							}
-							const rev_depLink: Pointer = new Pointer(pkg.id, true);
-							depTarget.revDepends.push(rev_depLink);
+							pkg.depends.push(dep)
 						}
-						const depLink: Pointer = new Pointer(dep, depTarget !== undefined);
-						pkg.depends.push(depLink)
 					})
 				}
 			}
-
-
-
+			
 			if (pkgList.length > 1) {
 				console.log("pkgList : \n", pkgList);
 			}

@@ -8,7 +8,8 @@ import PackageTree, { Package, Pointer } from './model/PackageTree';
 export default class AppState {
 
 	@observable public currentPackage?: Package;
-	@observable public breadcrumbs: string[];
+	@observable public currentPointer?: Pointer;
+	@observable public breadcrumbs: Pointer[];
 	@observable public packageTree: PackageTree;
 
 	constructor() {
@@ -24,26 +25,36 @@ export default class AppState {
 			return this.packageTree.structure.find(pkg => pkg.id === id);
 		}
 	}
-	public updateCurrentPackage(pkgId: string | undefined) {
+	public updateCurrentPackage(pkgPointer: Pointer | undefined) {
 		let pkg: Package | undefined;
-		if (pkgId) {
-			pkg = this.getPackage(pkgId);
+		if (pkgPointer) {
+			pkg = this.getPackage(pkgPointer.id);
 		}
-		if (pkg && this.currentPackage) {
-			this.breadcrumbs.push(String(this.currentPackage.id));
-		// if (pkg) {
-		// 	this.breadcrumbs.push(String(pkg.id));
+		if (pkgPointer && this.breadcrumbs.length > 1 && pkgPointer.id === this.breadcrumbs[this.breadcrumbs.length - 2].id) {
+				this.cutToBreadcrumb(this.breadcrumbs.length - 2);
 		} else {
-			this.breadcrumbs = [];
+			if (pkg && pkgPointer) {
+				// this.breadcrumbs.push(this.currentPointer);
+				this.breadcrumbs.push(pkgPointer);
+			// if (pkg) {
+			// 	this.breadcrumbs.push(String(pkg.id));
+			} else {
+				this.breadcrumbs = [];
+			}
+			this.currentPackage = pkg;
+			this.currentPointer = pkgPointer;
 		}
-		this.currentPackage = pkg;
 	}
 
 	public cutToBreadcrumb(crumbIndex: number) {
-		const pkg: Package | undefined = this.getPackage(this.breadcrumbs[crumbIndex]);
-		this.breadcrumbs = this.breadcrumbs.slice(0, crumbIndex);
+		const pkg: Package | undefined = this.getPackage(this.breadcrumbs[crumbIndex].id);
 		if (pkg) {
+			this.currentPointer = this.breadcrumbs[crumbIndex];
+			this.breadcrumbs = this.breadcrumbs.slice(0, crumbIndex);
+			this.breadcrumbs.push(this.currentPointer);
 			this.currentPackage = pkg;
+		} else {
+			this.updateCurrentPackage(undefined);
 		}
 	}
 }

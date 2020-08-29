@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from "mobx-react"
 
 import AppState from '../AppState';
+import { Pointer } from '../model/PackageTree';
 
 // const Header2 = (props: any) => {
 // 	const [breadcrumbs, setBreadcrumbs] = useState(props.breadcrumbs);
@@ -48,27 +49,41 @@ import AppState from '../AppState';
 @observer
 class Header extends React.Component <{appState: AppState, homeClickHandler: () => void, crumbClickHandler: (index: number) => void}, {}> {
 	latestRef: React.RefObject<HTMLParagraphElement>;
+	crumbContent: React.RefObject<HTMLDivElement>;
+	crumbContainer: React.RefObject<HTMLDivElement>;
 
 	constructor(props: any) {
 		super(props)
 		this.latestRef = React.createRef();
+		this.crumbContent = React.createRef();
+		this.crumbContainer = React.createRef();
 	}
 	crumbButtonFactory = (crumbIndex: number) => {
-		return (event: any) => {
-			return this.props.crumbClickHandler(crumbIndex);
+		const { breadcrumbs } = this.props.appState;
+		if (crumbIndex !== breadcrumbs.length-1) {
+			return (event: any) => {
+				return this.props.crumbClickHandler(crumbIndex);
+			}
+		} else {
+			return (event: any) => null;
 		}
 	}
-	scrollToMyRef = () => {
-		if (this.latestRef.current) {
-			this.latestRef.current.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start',
-			});	
+	scrollToLatestCrumb = () => {
+		if (this.crumbContent.current && this.crumbContainer.current) {
+
+			this.crumbContainer.current.scrollTo(0, this.crumbContent.current.clientHeight - this.crumbContainer.current.clientHeight); 
+
+
+
+			// this.latestRef.current.scrollIntoView({
+			// 	behavior: 'smooth',
+			// 	block: 'start',
+			// });	
 		}
 	}
 	componentDidUpdate() {
 		if (this.props.appState.breadcrumbs.length > 0) {
-			this.scrollToMyRef();
+			this.scrollToLatestCrumb();
 		}
 	}
 
@@ -86,12 +101,12 @@ class Header extends React.Component <{appState: AppState, homeClickHandler: () 
 				<div className="Header-column">
 						<div className={currentPackage && breadcrumbs.length > 0 ? "Header-column-top appear_up" : "Header-column-top hidden_down"}>
 							<button className="Header-column-infoButton element_button" onClick={this.props.homeClickHandler}>Reset to root</button>
-							<div className="Header-breadcrumbs-container" >
-								<div className="breadcrumbs_content" >
-									{breadcrumbs.map((crumb: string, indx: number) => {
-										return <button key={indx} className="breadCrumb element_button" onClick={this.crumbButtonFactory(indx)}>
+							<div className="Header-breadcrumbs-container" ref={this.crumbContainer}>
+								<div className="breadcrumbs_content" ref={this.crumbContent}>
+									{breadcrumbs.map((crumb: Pointer, indx: number) => {
+										return <button key={indx} className={ indx === breadcrumbs.length-1 ? "breadCrumb element_button current-crumb" : "breadCrumb element_button"} onClick={this.crumbButtonFactory(indx)}>
 											<div className="breadcrumbDivCircle upper_div_circle"/>
-											<p ref={indx === breadcrumbs.length-1 ? this.latestRef : null}>{crumb}</p>
+											<p ref={indx === breadcrumbs.length-1 ? this.latestRef : null} >{crumb.id}</p>
 										</button>
 									})}
 								</div>

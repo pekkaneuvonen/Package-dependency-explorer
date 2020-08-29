@@ -10,11 +10,17 @@ import box_closed from '../assets/box_closed.svg';
 import box_opened from '../assets/box_opened.svg';
 
 @observer
-class PackageView extends React.Component <{appState: AppState, packageClickHandler: (packageId: string) => void}> {
+class PackageView extends React.Component <{appState: AppState, packageClickHandler: (packagePointer: Pointer) => void}> {
+	oneupDependency: React.RefObject<HTMLParagraphElement>;
 
-	pkgButtonFactory = (pkgId: string) => {
+	constructor(props: any) {
+		super(props)
+		this.oneupDependency = React.createRef();
+	}
+
+	pkgButtonFactory = (pkgPointer: Pointer) => {
 		return (event: any) => {
-			return this.props.packageClickHandler(pkgId);
+			return this.props.packageClickHandler(pkgPointer);
 		}
 	}
 
@@ -34,7 +40,7 @@ class PackageView extends React.Component <{appState: AppState, packageClickHand
 		return <Fragment>
 			{structure.map((pkgData: Package, pkgIndx: number) => {
 				return <div className="Package" key={pkgIndx}>
-					<button className="Package-title-button element_button" onClick={this.pkgButtonFactory(pkgData.id)}>
+					<button className="Package-title-button element_button" onClick={this.pkgButtonFactory(pkgData.rootPointer)}>
 						<img className="packageIcon" src={box_closed} alt="package icon closed"/>
 						{pkgData.id}
 					</button>
@@ -55,49 +61,80 @@ class PackageView extends React.Component <{appState: AppState, packageClickHand
 			</div>
 		</div>;
 	}
-	depsView = (pkgData: Package) => {
+	depsView = (pkgData: Package, latestCrumb: Pointer) => {
+		const prevDep = this.props.appState.breadcrumbs && this.props.appState.breadcrumbs.length > 1 ? this.props.appState.breadcrumbs[this.props.appState.breadcrumbs.length - 2].id : undefined;
+		
 		return <Fragment>
 			{pkgData.depends ? 
 			pkgData.depends.map((depsData: Pointer, depIndx: number) => {
-				return <div className="Package" key={depIndx}>
+				return <div className="Pointer" ref={prevDep && prevDep === depsData.id ? this.oneupDependency : null} key={depIndx}>
 					{depsData.enabled ? 
-						<button className="Package-title-button element_button" onClick={this.pkgButtonFactory(depsData.id)}>
-							<img className="packageIcon" src={box_closed} alt="package icon closed"/>
-							{depsData.id}
-						</button>
+						<Fragment>
+							<button className="Package-title-button element_button" onClick={this.pkgButtonFactory(depsData)}>
+								<img className="packageIcon" src={box_closed} alt="package icon closed"/>
+								{depsData.id}
+							</button>
+							{ latestCrumb && latestCrumb.id === depsData.id ? 
+								<div className="dependency-stripe" />
+							: null }
+						</Fragment>
 					:
-						<div className="Package-title Package-title-disabled">
-							<img className="packageIcon element_disabled" src={box_closed} alt="package icon closed"/>
-							{depsData.id}
-						</div>
+						<Fragment>
+							<div className="Package-title Package-title-disabled">
+								<img className="packageIcon element_disabled" src={box_closed} alt="package icon closed"/>
+								{depsData.id}
+							</div>
+						</Fragment>
 					}
 				</div>
 			})
 			: null}
     </Fragment>;
 	}
-	RevDepsView = (pkgData: Package) => {
+	RevDepsView = (pkgData: Package, latestCrumb: Pointer) => {
+		const prevDep = this.props.appState.breadcrumbs && this.props.appState.breadcrumbs.length > 1 ? this.props.appState.breadcrumbs[this.props.appState.breadcrumbs.length - 2].id : undefined;
+
 		return <div>
 			{pkgData.revDepends ? 
-			pkgData.revDepends.map((revDepData: Pointer, revdepIndx: number) => {
-				return <div className="Package" key={revdepIndx}>
-					<button className="Package-title-button element_button" onClick={this.pkgButtonFactory(revDepData.id)}>
-						<img className="packageIcon" src={box_closed} alt="package icon closed"/>
-						{revDepData.id}
-					</button>
-				</div>
-			})
-		: null}
+				pkgData.revDepends.map((revDepData: Pointer, revdepIndx: number) => {
+					return <div className="Pointer" ref={prevDep && prevDep === revDepData.id ? this.oneupDependency : null} key={revdepIndx}>
+						{ latestCrumb && latestCrumb.id === revDepData.id ? 
+							<div className="dependency-stripe rev-dependency-stripe" />
+						: null }
+						<button className="Package-title-button element_button" onClick={this.pkgButtonFactory(revDepData)}>
+							<img className="packageIcon" src={box_closed} alt="package icon closed"/>
+							{revDepData.id}
+						</button>
+					</div>
+				})
+			: null}
     </div>;
 	}
 
+
+	scrollToPrevDependency = () => {
+		if (this.oneupDependency.current) {
+			this.oneupDependency.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'center',
+			});	
+		}
+	}
+	componentDidUpdate(prevProps: any) {
+		const { breadcrumbs } = this.props.appState;
+		if (breadcrumbs && breadcrumbs.length > 1) {
+			this.scrollToPrevDependency();
+		}
+	}
+
+
 	render() {
-		const { currentPackage } = this.props.appState;
+		const { currentPackage, breadcrumbs } = this.props.appState;
 		return (
 			<div className="Tree">
 				<div className="Tree-column">
 					{currentPackage ? 
-						this.depsView(currentPackage)
+						this.depsView(currentPackage, breadcrumbs[breadcrumbs.length - 2])
 					:
 						null
 					}
@@ -115,7 +152,7 @@ class PackageView extends React.Component <{appState: AppState, packageClickHand
 				</div>
 				<div className="Tree-column">
 					{currentPackage ? 
-						this.RevDepsView(currentPackage)
+						this.RevDepsView(currentPackage, breadcrumbs[breadcrumbs.length - 2])
 					:
 						null
 					}

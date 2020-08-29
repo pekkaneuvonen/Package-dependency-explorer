@@ -221,7 +221,9 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   p {
     text-align: center;
   }
-  transition: $basicTransition;
+  // transition: $basicTransition;
+  transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+
   transform: none;
 
   &:hover, :focus {
@@ -241,6 +243,13 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     bottom: -3px;
   }
 }
+.current-crumb {
+  cursor: default;
+  &:hover, :focus {
+    background: transparent;
+  }
+}
+
 
 
 .Tree {
@@ -273,6 +282,25 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   background-color: #6EC1CE;
   margin: 16px;
   padding: 0;
+}
+.Pointer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background-color: #6EC1CE;
+  margin: 16px;
+  padding: 0;
+}
+.dependency-stripe {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 1vh;
+  background-color: $header-text-color;
+}
+.rev-dependency-stripe {
+  right: default;
+  left: 0;
 }
 
 .Package-title {
@@ -324,7 +352,7 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   fill: whitesmoke;
 }
 .element_disabled {
-  opacity: 0.8;
+  opacity: 0.65;
 }
 
 .Package-description {

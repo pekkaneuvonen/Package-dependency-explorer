@@ -8,7 +8,7 @@ import AppState from './AppState';
 import Header from './components/Header';
 import PackageView from './components/PackageView';
 import { tempHCmock } from './assets/Sample';
-import PackageTree, { Package } from './model/PackageTree';
+import PackageTree, { Package, Pointer } from './model/PackageTree';
 
 // const remote = window.require('electron').remote;
 
@@ -77,9 +77,9 @@ function App() {
     console.log("crumbClicHandler : ", crumbIndx, " ( ", appState.breadcrumbs[crumbIndx], " ) ");
     appState.cutToBreadcrumb(crumbIndx);
   }
-  const packageClickHandler = (packageId: string) => {
-    console.log("packageClickHandler : ", packageId);
-    appState.updateCurrentPackage(packageId);
+  const packageClickHandler = (packagePointer: Pointer) => {
+    console.log("packageClickHandler : ", packagePointer);
+    appState.updateCurrentPackage(packagePointer);
   }
 
   
