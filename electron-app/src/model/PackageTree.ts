@@ -1,33 +1,33 @@
-
 class Field { 
-    name: string;
-    value: string;
-    constructor (n: string, v: string) {
-        this.name = n;
-        this.value = v;
-    }
+	name: string;
+	value: string;
+	constructor (n: string, v: string) {
+		this.name = n;
+		this.value = v;
+	}
 }
-export class Package {
-    id: string;
-		data: string;
-		fields: Field[];
-    depends?: Pointer[];
-    revDepends?: Pointer[];
 
-    constructor (id: string, data: string, fields: Field[]) {
-			this.id = id;
-			this.data = data;
-			this.fields = fields;
-		}
-		
-		getDescription = () => {
-			return this.fields.find(field => field.name === "Description");
-		}
+export class Package {
+	id: string;
+	data: string;
+	fields: Field[];
+	depends?: Pointer[];
+	revDepends?: Pointer[];
+
+  constructor (id: string, data: string, fields: Field[]) {
+		this.id = id;
+		this.data = data;
+		this.fields = fields;
+	}
+	
+	getDescription = () => {
+		return this.fields.find(field => field.name === "Description");
+	}
 }
 export class Pointer {
 	id: string;
 	enabled: boolean;
-
+	
 	constructor (id: string, enabled: boolean) {
 		this.id = id;
 		this.enabled = enabled;
@@ -36,7 +36,6 @@ export class Pointer {
 
 export default class PackageTree {
     structure: Package[];
-
 
     getPackage = (pkgData: string): Package => {
 			// split to lines

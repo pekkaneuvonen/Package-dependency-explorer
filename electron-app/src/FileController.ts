@@ -14,22 +14,22 @@ const userDataPath: string = remote.app.getPath('userData');
 const mockDataDir = path.resolve(userDataPath, "mockdata");
 
 
-const listDir = (dirPath: string) => {
-	console.log(" dir list in ", dirPath);
-	( async () => {
-		try {
-			const files = await rendererFsPromises.readdir( dirPath );
-			for ( const file of files ) {
-				console.log( "file: ", dirPath, " -- ", file );
-			}
-		}
-		catch ( e ) {
-			console.error( "We've thrown! Whoops!", e );
-		}
+// const listDir = (dirPath: string) => {
+// 	console.log(" dir list in ", dirPath);
+// 	( async () => {
+// 		try {
+// 			const files = await rendererFsPromises.readdir( dirPath );
+// 			for ( const file of files ) {
+// 				console.log( "file: ", dirPath, " -- ", file );
+// 			}
+// 		}
+// 		catch ( e ) {
+// 			console.error( "We've thrown! Whoops!", e );
+// 		}
 
-	})();
+// 	})();
 
-}
+// }
 
 const getPackageRoot = (statusFilePath: string, statusFileName: string): Promise<string> => {
 	// const pathToLocalAsset = path.resolve(statusFilePath, statusFileName);

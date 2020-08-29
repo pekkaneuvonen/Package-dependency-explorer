@@ -13,6 +13,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
+    "experimentalDecorators": true,
     "sourceMap": true,
     "noEmitOnError": true,
     "typeRoots": [
