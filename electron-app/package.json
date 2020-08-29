@@ -1,20 +1,30 @@
 {
   "name": "package-dependency-explorer",
-  "appId": "com.electron.${name}",
+  "appId": "org.neuvonen.${name}",
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
   "main": "build/electron/main.js",
-  "author": "Pekka Neuvonen",
+  "author": {
+    "name": "Pekka Neuvonen",
+    "email": "pekka@alho.net"
+  },
   "copyright": "Copyright © 2020 ${author}",
-  "description": "React-TypeScript-Electron desktop app exercise",
+  "description": "Simple React-TypeScript-Electron desktop app exercise",
   "build": {
+    "appId": "org.neuvonen.${name}",
+    "productName": "Package Dependency Explorer",
     "extends": null,
     "directories": {
       "buildResources": "assets"
     },
     "mac": {
-      "icon": "./public/icon.png"
+      "icon": "./public/icon.icns",
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "icon": "./public/icon.icns",
+      "category": "public.app-category.developer-tools"
     },
     "win": {
       "icon": "./public/icon.ico"
@@ -32,6 +42,8 @@
     "electron-devtools-installer": "^3.1.1",
     "electron-is-dev": "^1.2.0",
     "electron-reload": "^1.5.0",
+    "mobx": "^5.15.6",
+    "mobx-react": "^6.3.0",
     "node-sass-chokidar": "^1.5.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -41,7 +53,7 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "electron:dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
-    "electron:build": "yarn build && tsc -p electron && electron-builder",
+    "electron:build": "yarn build && tsc -p electron && electron-builder -mwl",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -66,6 +78,8 @@
     "concurrently": "^5.3.0",
     "electron": "^9.2.1",
     "electron-builder": "^22.8.0",
+    "fibers": "^5.0.0",
+    "sass": "^1.26.10",
     "wait-on": "^5.2.0"
   }
 }

@@ -45,7 +45,7 @@ function createWindow() {
     win.webContents.openDevTools();
   }
 }
-
+app.setAppUserModelId('org.neuvonen.package-dependency-explorer')
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
