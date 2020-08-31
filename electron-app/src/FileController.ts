@@ -88,6 +88,15 @@ export function packageRootFromFile(statusFilePath: string, statusFileName: stri
 			console.log("statusFileToUse ", resultFile);
 			rendererFs.readFile(resultFile, 'utf8', (err: any, data: any) => {
 				if (err) {
+					// one more try
+					rendererFs.readFile(pathToStaticSource, 'utf8', (error: any, staticAssetData: any) => {
+						if (error) {
+							// i give up
+							reject(error);
+						} else {
+							resolve(staticAssetData);
+						}
+					})
 					reject(err);
 				} else {
 					resolve(data);
