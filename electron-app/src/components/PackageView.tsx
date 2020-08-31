@@ -95,18 +95,19 @@ class PackageView extends React.Component <IPackageViewProps, IPackageViewState>
 					{pkgData.id}
 				</button>
 			:
-			<div className={"Tree-package-column"} ref={pkgData === this.props.appState.currentPackage ? this.currentPackageRef : this.prevPackageRef}>
+			<div className={"Tree-package-column"} 
+				ref={
+					pkgData === this.props.appState.currentPackage ? this.currentPackageRef 
+				: 
+					pkgData === this.props.appState.prevPackage ? this.prevPackageRef 
+				: 
+					null
+				}>
 				<div className="Package-header" >
-					<div className="Package-dependency-connector-knob left-connector-knob"/>
-					<div className="Package-dependency-connector" />
-
 					<div className="Package-title" >
 						<img className="packageIcon" src={box_opened} alt="package icon opened"/>
-						{pkgData ? pkgData.id : "untitled"}
+						{pkgData.id}
 					</div>
-
-					<div className="Package-dependency-connector right-connector" />
-					<div className="Package-dependency-connector-knob right-connector-knob"/>
 				</div>
 
 				<Tween
@@ -121,7 +122,9 @@ class PackageView extends React.Component <IPackageViewProps, IPackageViewState>
 				>
 					<div className="Package-description">
 						<div className="Package-description-content">
-							<p>{pkgData.getDescription()?.value}</p>
+							{pkgData.getDescription()?.value.split(/\r?\n/).map((paragraph: string, indx: number) => {
+								return <p key={indx} style={{marginBottom: '0', marginTop: '0'}}>{paragraph}</p>
+							})}
 						</div>
 					</div>
 				</Tween>
@@ -135,32 +138,33 @@ class PackageView extends React.Component <IPackageViewProps, IPackageViewState>
 		return <div className={this.props.appState.packageInView ? "Dependency-content" : "Dependency-content element_hidden"} >
 			{pkgData.depends ? 
 			pkgData.depends.map((depsData: Pointer, depIndx: number) => {
-				return <div className="Pointer" ref={prevDep && prevDep === depsData.id ? this.oneupDependency : null} key={depIndx}>
-					{depsData.enabled ? 
-						<Fragment>
-							<button className="Pointer-title Pointer-title-button element_button" onClick={this.pkgButtonFactory(depsData)}>
-								<img className="pointerIcon" src={box_closed} alt="package icon closed"/>
-								{depsData.id}
-							</button>
-							<img className="pointerArrow" src={arrow} alt="arrow" />
+				const opened = latestCrumb && latestCrumb.id === depsData.id;
 
-							{ latestCrumb && latestCrumb.id === depsData.id ? 
-								<div className="dependency-connector">
-									<div className="Pointer-dependency-connector"/>
-									<div className="Pointer-dependency-connector-knob"/>
+				return <Tween key={depIndx} 
+				duration={0.3} delay={0.5 + depIndx / 10}
+				from={{css: {left: -32, opacity: '0'}}}>
+					<div className="Pointer" ref={prevDep && prevDep === depsData.id ? this.oneupDependency : null} key={depIndx}>
+						{depsData.enabled ? 
+							<Fragment>
+								<button className={opened ? "Pointer-title Pointer-title-button element_button Pointer-title-opened" : "Pointer-title Pointer-title-button element_button"} onClick={this.pkgButtonFactory(depsData)}>
+									<img className="pointerIcon" src={opened ? box_opened : box_closed} alt="package icon closed"/>
+									{depsData.id}
+								</button>
+								<img className="pointerArrow" src={arrow} alt="arrow" />
+								<div className="dependency-connector"/>
+							</Fragment>
+						:
+							<Fragment>
+								<div className="Pointer-title element_disabled">
+									<img className="pointerIcon element_disabled" src={box_closed} alt="package icon closed"/>
+									{depsData.id}
 								</div>
-							: null }
-						</Fragment>
-					:
-						<Fragment>
-							<div className="Pointer-title element_disabled">
-								<img className="pointerIcon element_disabled" src={box_closed} alt="package icon closed"/>
-								{depsData.id}
-							</div>
-							<img className="pointerArrow element_disabled" src={arrow} alt="arrow" />
-						</Fragment>
-					}
-				</div>
+								<img className="pointerArrow element_disabled" src={arrow} alt="arrow" />
+								<div className="dependency-connector"/>
+							</Fragment>
+						}
+					</div>
+				</Tween>
 			})
 			: null}
     </div>;
@@ -171,22 +175,20 @@ class PackageView extends React.Component <IPackageViewProps, IPackageViewState>
 		return <div className={this.props.appState.packageInView ? "Dependency-content" : "Dependency-content element_hidden"} >
 			{pkgData.revDepends ? 
 				pkgData.revDepends.map((revDepData: Pointer, revdepIndx: number) => {
-					return <div className="Pointer Pointer-rev-dependency" ref={prevDep && prevDep === revDepData.id ? this.onedownDependency : null} key={revdepIndx}>
-						<img className="pointerArrow rev-dependency-pointerArrow" src={arrow} alt="arrow" />
+					const opened = latestCrumb && latestCrumb.id === revDepData.id;
 
-						{ latestCrumb && latestCrumb.id === revDepData.id ? 
-								<div className="dependency-connector rev-dependency-connector">
-									<div className="Pointer-dependency-connector-knob"/>
-									<div className="Pointer-dependency-connector"/>
-								</div>
-							: null }
-						<button className="Pointer-title Pointer-title-button element_button" onClick={this.pkgButtonFactory(revDepData)}>
-
-						{/* <button className="Package-title-button Dependency-title element_button" onClick={this.pkgButtonFactory(revDepData)}> */}
-							<img className="pointerIcon" src={box_closed} alt="package icon closed"/>
-							{revDepData.id}
-						</button>
-					</div>
+					return <Tween key={revdepIndx} 
+					duration={0.3} delay={0.5 + revdepIndx / 10}
+					from={{css: {left: -32, opacity: '0'}}}>
+							<div className="Pointer Pointer-rev-dependency" ref={prevDep && prevDep === revDepData.id ? this.onedownDependency : null} key={revdepIndx}>
+							<img className="pointerArrow rev-dependency-pointerArrow" src={arrow} alt="arrow" />
+							<div className="dependency-connector rev-dependency-connector"/>
+							<button className={opened ? "Pointer-title Pointer-title-button element_button Pointer-title-opened" : "Pointer-title Pointer-title-button element_button"} onClick={this.pkgButtonFactory(revDepData)}>
+								<img className="pointerIcon" src={opened ? box_opened : box_closed} alt="package icon closed"/>
+								{revDepData.id}
+							</button>
+						</div>
+					</Tween>
 				})
 			: null}
     </div>;

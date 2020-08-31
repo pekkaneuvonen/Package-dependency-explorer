@@ -28,15 +28,7 @@ class Header extends React.Component <{appState: AppState, homeClickHandler: () 
 	}
 	scrollToLatestCrumb = () => {
 		if (this.crumbContent.current && this.crumbContainer.current) {
-
 			this.crumbContainer.current.scrollTo(0, this.crumbContent.current.clientHeight - this.crumbContainer.current.clientHeight); 
-
-
-
-			// this.latestRef.current.scrollIntoView({
-			// 	behavior: 'smooth',
-			// 	block: 'start',
-			// });	
 		}
 	}
 	componentDidUpdate() {
@@ -51,13 +43,22 @@ class Header extends React.Component <{appState: AppState, homeClickHandler: () 
 		return (
 			<div className="Header">
 				<div className="Header-column">
-					<div className="Header-column-top"></div>
+					<div className="appId">
+						<p className="appId-title">Package Dependency Explorer</p>
+						<p className="appId-description">for Debian and Ubuntu systems</p>
+						<div className="appId-description appId-description-divider"/>
+						<p className="appId-description">Sample project for exercising desktop app developmant and production.</p>
+					</div>
+
+
+					<div className="Header-column-top">
+					</div>
 					<div className="Header-column-title">
 						Dependencies
 					</div>
 				</div>
 				<div className="Header-column">
-						<div className={currentPackage && breadcrumbs.length > 0 ? "Header-column-top appear_up" : "Header-column-top hidden_down"}>
+						<div className={currentPackage && breadcrumbs.length > 0 ? "Header-column-top Header-column-top-middle appear_up" : "Header-column-top Header-column-top-middle hidden_down"}>
 							<button className="Header-column-infoButton element_button" onClick={this.props.homeClickHandler}>Reset to root</button>
 							<div className="Header-breadcrumbs-container" ref={this.crumbContainer}>
 								<div className="breadcrumbs_content" ref={this.crumbContent}>

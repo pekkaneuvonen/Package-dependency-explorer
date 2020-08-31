@@ -19,7 +19,7 @@ export default class AppState {
 	@observable public packageTree: PackageTree;
 
 	constructor() {
-		this.packageTree = new PackageTree("Package: root");
+		this.packageTree = new PackageTree("Package: Loading root...");
 		this.breadcrumbs = [];
 		this.scrolling = false;
 		this.dependeciesScrolling = false;

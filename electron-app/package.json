@@ -10,7 +10,7 @@
     "email": "pekka@alho.net"
   },
   "copyright": "Copyright © 2020 ${author}",
-  "description": "Simple React-TypeScript-Electron desktop app exercise",
+  "description": "Simple React-TypeScript-Electron desktop application exercise",
   "build": {
     "appId": "org.neuvonen.${name}",
     "productName": "Package Dependency Explorer",

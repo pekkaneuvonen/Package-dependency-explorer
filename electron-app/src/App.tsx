@@ -8,7 +8,7 @@ import AppState from './AppState';
 import Header from './components/Header';
 import PackageView from './components/PackageView';
 import { tempHCmock } from './assets/Sample';
-import PackageTree, { Package, Pointer } from './model/PackageTree';
+import PackageTree, { Pointer } from './model/PackageTree';
 
 // const remote = window.require('electron').remote;
 

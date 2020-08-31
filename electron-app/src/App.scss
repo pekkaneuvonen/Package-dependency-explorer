@@ -5,18 +5,23 @@ $background: #41ACBB;
 $header-background: #323232;
 $header-text-color: #349AA9;
 $pointer-background: #6EC1CE;
-$package-title-color: #216F7A;
+$pointer-title-color: #216F7A;
+$package-title-color: #F2F2F2;
 $headerHeight: 36vh;
 $breadcrumbHeight: 7.5vh;
 $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 
 
-// Scroll bars suddenly appeared as solid white blocks ??
-::-webkit-scrollbar {
-  background-color: transparent;
-  display: none;
-}
-
+// .customized-scrollbar {
+//   scrollbar-width: thin;
+//   scrollbar-color: $header-text-color $pointer-background;
+// }
+// .customized-scrollbar::-webkit-scrollbar-thumb {
+//   color: $pointer-background;
+// }
+// .customized-scrollbar::-webkit-scrollbar-track {
+//   background-color: transparent;
+// }
 
 .App {
   background-color: #41ACBB;
@@ -95,6 +100,7 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .Header-column {
+  position: relative;
   width: 33.4vw;
   display: flex;
   height: 100%;
@@ -102,9 +108,42 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   justify-content: flex-end;
   padding: 0;
 }
+.appId {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  width: 30vw;
+  font: {
+    family: Roboto Condensed;
+    top: 0;
+    style: normal;
+    weight: 300;
+    size: calc(14px + 0.5vh);
+  }
+  text-align: left;
+}
+.appId-title {
+  position: relative;
+  margin: 0;
+  font: {
+    size: calc(16px + 0.5vh);
+    weight: 700;
+  }
+}
+.appId-description {
+  position: relative;
+  margin: 0;
+  margin-top: 4px;
+  width: 70%;
+}
+.appId-description-divider {
+  height: 1px;
+  margin-top:8px;
+  margin-bottom:8px;
+  background-color: rgba($header-text-color, 0.6);
+}
 .Header-column-top {
   width: 100%;
-  height: calc(36vh - 12.5vh);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -118,6 +157,9 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   //   -o-transition: all 300ms ease-out;
   //   transition: all 300ms ease-out;
 
+}
+.Header-column-top-middle {
+  height: calc(36vh - 12.5vh);
 }
 .hidden_up {
   transform: translateY(-3vh);
@@ -224,7 +266,7 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     weight: 300;
     size: 2.3vh;
   }
-  color: $package-title-color;
+  color: $pointer-title-color;
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -323,7 +365,7 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   top: 0;
   left: 0;
 }
-.Package-header{
+.Package-header {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -362,12 +404,14 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   width: calc(100% - 16px);
   background-color: $header-text-color;
   padding: 24px;
+  margin-left: 14px;
+  margin-right: 14px;
   font: {
     weight: 100;
     size: 2.4vh;
   }
   line-height: 100%;
-  color: #F2F2F2;
+  color: $package-title-color;
 
   display: flex;
   align-items: center;
@@ -381,7 +425,7 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   margin-right: 14px;
   padding: 24px;
   background-color: #6EC1CE;
-  color: $package-title-color;
+  color: $pointer-title-color;
   display: flex;
   align-items: center;
 
@@ -415,7 +459,7 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   margin-left: 24px;
   margin-right: 24px;
   padding: 24px;
-  padding-top: 8px;
+  padding-top: 16px;
   padding-bottom: 24px;
   font: {
     weight: bold;
@@ -424,8 +468,7 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   line-height: 150%;
   overflow-y: scroll;
 
-  color: $package-title-color;
-  // background-color: rgba($package-title-color, 0.2);
+  color: $pointer-title-color;
   background-color: $pointer-background;
 }
 .Package-description-content {
@@ -461,15 +504,16 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     align: center;
   }
   line-height: 100%;
-  color: $package-title-color;
+  color: $pointer-title-color;
 
   display: flex;
   align-items: center;
 }
+
 .Pointer-title-button {
 
   background-color: #6EC1CE;
-  color: $package-title-color;
+  color: $pointer-title-color;
   display: flex;
   align-items: center;
 
@@ -481,9 +525,16 @@ $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
 }
+.Pointer-title-opened {
+  background-color: $header-text-color;
+  color: $package-title-color;
+  &:hover, :focus {
+    background: rgba(#7ccfdb, 0.3);
+  }
+}
 .Pointer-title-disabled {
   background-color: #6EC1CE;
-  color: $package-title-color;
+  color: $pointer-title-color;
 }
 .pointerIcon {
   width: 2.6vh;
