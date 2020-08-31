@@ -32,8 +32,8 @@ function App() {
           Select your platform.
         </p>
         <div className="linkContainer">
-          <button className="icon_button"><a href={`${baseUrl}download/mac`} download="package-dependency-explorer.zip"><img className="icon" src={mac_logo} alt={"mac os x icon"} /></a></button>
-          <button className="icon_button"><a href={`${baseUrl}download/win`} download="package-dependency-explorer.snap"><img className="icon" src={win_logo} alt={"windows icon"} /></a></button>
+          <button className="icon_button"><a href={`${baseUrl}download/mac`} download="package-dependency-explorer.dmg"><img className="icon" src={mac_logo} alt={"mac os x icon"} /></a></button>
+          <button className="icon_button"><a href={`${baseUrl}download/win`} download="package-dependency-explorer.zip"><img className="icon" src={win_logo} alt={"windows icon"} /></a></button>
           <button className="icon_button"><a href={`${baseUrl}download/linux`} download="package-dependency-explorer.AppImage"><img className="icon" src={linux_logo} alt={"linux icon"} /></a></button>
         </div>
       </header>

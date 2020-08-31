@@ -14,9 +14,9 @@ app.get('/download/:platform', (request, res) => {
   let fileName;
   console.log("get ", request.params.platform);
   if (request.params.platform === "mac") {
-    fileName = 'PDE-mac.zip';
+    fileName = 'PDE.dmg';
   } else if (request.params.platform === "win") {
-    fileName = 'PDE.snap';
+    fileName = 'PDE-win.zip';
   } else if (request.params.platform === "linux") {
     fileName = 'PDE.AppImage';
   }
