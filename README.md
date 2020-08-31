@@ -13,3 +13,10 @@ The application is not signed or certified in any official way, so running them 
 * _choosing first more info and then clicking run anyway on Windows_
 
 The application was created with Electron, React and Typescript, Electron-builder was used for build and packaging. Many thanks goes to Yhirose for the original template https://github.com/yhirose/react-typescript-electron-sample-with-create-react-app-and-electron-builder.
+
+
+###### Subdirectories:
+- download-web-app: contains the front end of the heroku site for file download
+- download-web-backend: the heroku websites back end
+- electron-app: the actual Electron project files
+- visual assets: couple of icons
