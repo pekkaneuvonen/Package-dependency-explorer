@@ -4,10 +4,19 @@ $white: #FFF;
 $background: #41ACBB;
 $header-background: #323232;
 $header-text-color: #349AA9;
+$pointer-background: #6EC1CE;
 $package-title-color: #216F7A;
 $headerHeight: 36vh;
 $breadcrumbHeight: 7.5vh;
-$basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+$defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+
+
+// Scroll bars suddenly appeared as solid white blocks ??
+::-webkit-scrollbar {
+  background-color: transparent;
+  display: none;
+}
+
 
 .App {
   background-color: #41ACBB;
@@ -61,8 +70,12 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
   
 }
-
-
+.element_disabled {
+  opacity: 0.65;
+}
+.element_hidden {
+  opacity: 0;
+}
 
 .Header {
   background-color: $header-background;
@@ -97,7 +110,7 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   justify-content: flex-end;
   opacity: 1;
   transform: none;
-  transition: $basicTransition;
+  transition: $defaultAllTransition;
   // transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   // transition: all 300ms ease-out;
   // -webkit-transition: all 300ms ease-out;
@@ -194,6 +207,7 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   height: calc(36vh - 12.5vh - 7vh);
   border-bottom: 1px solid rgba($header-text-color, 0.6);
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 .breadcrumbs_content {
   width: 100%;
@@ -221,7 +235,7 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   p {
     text-align: center;
   }
-  // transition: $basicTransition;
+  // transition: $defaultAllTransition;
   transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 
   transform: none;
@@ -274,36 +288,78 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   font-weight: normal;
   font-size: 1.5vh;
   line-height: 150%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: visible;
   color: #216F7A;
+  scroll-behavior: smooth;
 }
+.Tree-pointer-column {
+  position: relative;
+  padding-top: 8px;
+  padding-bottom: 8px;
 
-.Package {
-  background-color: #6EC1CE;
-  margin: 16px;
-  padding: 0;
+  background-color: transparent;
 }
-.Pointer {
+.Tree-package-column {
+  position: relative;
+  padding-top: 8px;
+  padding-bottom: 32px;
+  background-color: $header-text-color;
+
+  // background-color: $pointer-background;
+}
+.dependency-list-container {
+  scroll-behavior: smooth;
+
+}
+.Dependency-content {
+  transition: $defaultAllTransition;
+}
+.RootPointer {
+  position: relative;
+  margin: 16px;
+}
+.Package {
+  top: 0;
+  left: 0;
+}
+.Package-header{
   position: relative;
   display: flex;
   flex-direction: row;
-  background-color: #6EC1CE;
-  margin: 16px;
-  padding: 0;
+  align-items: center;
 }
-.dependency-stripe {
-  position: absolute;
-  right: 0;
-  height: 100%;
-  width: 1vh;
+.Package-dependency-connector {
+  height: 2px;
+  width: 8px;
   background-color: $header-text-color;
 }
-.rev-dependency-stripe {
-  right: default;
-  left: 0;
+.Package-dependency-connector-knob {
+  height: 6px;
+  width: 6px;
+  background-color: $header-text-color;
+  border-radius: 3px;
+}
+.left-connector-knob {
+  margin-left: 1px;
+}
+.right-connector-knob {
+  margin-right: 1px;
+}
+.Package-dependency-horisConnector {
+  position: absolute;
+  height: 2px;
+  width: 8px;
+  background-color: $black; // $header-text-color;
+}
+.Package-dependency-vertConnector {
+  position: absolute;
+  width: 2px;
+  background-color: $black; // $header-text-color;
 }
 
 .Package-title {
+  width: calc(100% - 16px);
   background-color: $header-text-color;
   padding: 24px;
   font: {
@@ -318,7 +374,11 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .Package-title-button {
-  width: 100%;
+  width: calc(100% - 28px);
+  margin: 16px;
+
+  margin-left: 14px;
+  margin-right: 14px;
   padding: 24px;
   background-color: #6EC1CE;
   color: $package-title-color;
@@ -340,10 +400,7 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
 }
-.Package-title-disabled {
-  background-color: #6EC1CE;
-  color: $package-title-color;
-}
+
 .packageIcon {
   width: 3vh;
   height: 3vh;
@@ -351,20 +408,124 @@ $basicTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 
   fill: whitesmoke;
 }
-.element_disabled {
-  opacity: 0.65;
-}
+
 
 .Package-description {
   max-height: calc(48vh);
+  margin-left: 24px;
+  margin-right: 24px;
   padding: 24px;
-  padding-top: 16px;
+  padding-top: 8px;
+  padding-bottom: 24px;
   font: {
     weight: bold;
     size: 1.5vh;
   }
   line-height: 150%;
-  overflow: scroll;
+  overflow-y: scroll;
 
   color: $package-title-color;
+  // background-color: rgba($package-title-color, 0.2);
+  background-color: $pointer-background;
+}
+.Package-description-content {
+  overflow: hidden;
+}
+
+
+.Pointer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 16px;
+  margin-right: 0;
+}
+.Pointer-rev-dependency {
+  margin-right: 16px;
+  margin-left: 0;
+}
+.Pointer-title {
+  // width: calc(100% - 16px);
+  width: calc(100% - 3vh);
+
+  background-color: $pointer-background;
+  padding: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font: {
+    weight: 100;
+    size: 1.8vh;
+  }
+  text: {
+    align: center;
+  }
+  line-height: 100%;
+  color: $package-title-color;
+
+  display: flex;
+  align-items: center;
+}
+.Pointer-title-button {
+
+  background-color: #6EC1CE;
+  color: $package-title-color;
+  display: flex;
+  align-items: center;
+
+  &:hover, :focus {
+    background: #7ccfdb;
+  }
+  &:focus {
+    outline: 1px solid #4d99a5;
+  }
+
+}
+.Pointer-title-disabled {
+  background-color: #6EC1CE;
+  color: $package-title-color;
+}
+.pointerIcon {
+  width: 2.6vh;
+  height: 2.6vh;
+  margin-right: 12px;
+
+  fill: whitesmoke;
+}
+
+.dependency-connector {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 1vh;
+  height: 100%;
+  width: 3vh;
+  border-left: solid 1vh $header-text-color;
+  // background-color: rgba($header-text-color, 0.4);
+}
+.rev-dependency-connector {
+  right: default;
+  left: 1vh;
+  border-left: none;
+  border-right: solid 1vh $header-text-color;
+}
+
+.Pointer-dependency-connector {
+  height: 2px;
+  width: 28px;
+  background-color: $header-text-color;
+}
+.Pointer-dependency-connector-knob {
+  height: 6px;
+  width: 6px;
+  background-color: $header-text-color;
+  border-radius: 3px;
+}
+
+
+.pointerArrow {
+  height: 4vh;
+}
+.rev-dependency-pointerArrow {
+
 }

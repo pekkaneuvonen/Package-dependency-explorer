@@ -134,7 +134,7 @@ export default class PackageTree {
 					});
 
 					// flat and combine to normal deps
-					deps ? deps.concat(predeps.flat()) : predeps.flat();
+					deps = deps ? deps.concat(predeps.flat()) : predeps.flat();
 				}
 
 				// go through dependencies

@@ -4,48 +4,6 @@ import { observer } from "mobx-react"
 import AppState from '../AppState';
 import { Pointer } from '../model/PackageTree';
 
-// const Header2 = (props: any) => {
-// 	const [breadcrumbs, setBreadcrumbs] = useState(props.breadcrumbs);
-// 	const scrollToRef = (ref: React.MutableRefObject<any>) => window.scrollTo(0, ref.current.clientHeight);
-
-// 	const myRef = useRef(null)
-// 	useEffect(() => {
-// 		console.log("scrollToRef")
-// 		scrollToRef(myRef)
-// 	}, [ breadcrumbs ])
-
-// 	return (
-// 		<div className="Header">
-// 			<div className="Header-column">
-// 				<div className="Header-column-title">
-// 				Dependencies
-// 				</div>
-// 			</div>
-// 			<div className="Header-column">
-// 				<button onClick={props.homeClickHandler}>HOME</button>
-// 				<div className="Header-breadcrumbs-container" ref={myRef}>
-// 					{breadcrumbs.map((crumb: string, indx: number) => {
-// 						return <div key={indx} className="breadCrumb"><p>{crumb}</p></div>
-// 					})}
-// 				</div>	
-// 				<div className="Header-column-title">
-// 					{breadcrumbs.length > 0 ?
-// 						'Current Package'
-// 					:
-// 						'Home'
-// 					}
-// 				</div>
-// 			</div>
-// 			<div className="Header-column">
-// 				<div className="Header-column-title">
-// 				Reverse Dependencies
-// 				</div>
-// 			</div>
-// 		</div>
-// 	);
-// } 
-// export default Header2;
-
 @observer
 class Header extends React.Component <{appState: AppState, homeClickHandler: () => void, crumbClickHandler: (index: number) => void}, {}> {
 	latestRef: React.RefObject<HTMLParagraphElement>;
