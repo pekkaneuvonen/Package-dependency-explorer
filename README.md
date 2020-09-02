@@ -12,7 +12,7 @@ The application is not signed or certified in any official way, so running them 
 * _tapping the permission to run as a program checkbox on Linux_
 * _choosing first more info and then clicking run anyway on Windows_
 
-There is also an online demo of the application under the heroku site for testing the functionality without downloading the actual packages.
+There is also an **online demo** of the application under the heroku site for testing the functionality without downloading the actual packages.
 
 The application was created with Electron, React and Typescript, Electron-builder was used for build and packaging. Many thanks goes to Yhirose for the original template https://github.com/yhirose/react-typescript-electron-sample-with-create-react-app-and-electron-builder.
 
