@@ -1,0 +1,568 @@
+
+$black: #000;
+$white: #FFF;
+$background: #41ACBB;
+$header-background: #323232;
+$header-text-color: #349AA9;
+$pointer-background: #6EC1CE;
+$pointer-title-color: #216F7A;
+$package-title-color: #F2F2F2;
+$headerHeight: 36vh;
+$breadcrumbHeight: 7.5vh;
+$defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+
+
+// .customized-scrollbar {
+//   scrollbar-width: thin;
+//   scrollbar-color: $header-text-color $pointer-background;
+// }
+// .customized-scrollbar::-webkit-scrollbar-thumb {
+//   color: $pointer-background;
+// }
+// .customized-scrollbar::-webkit-scrollbar-track {
+//   background-color: transparent;
+// }
+
+.Explorer {
+  background-color: #41ACBB;
+}
+
+.element_button {
+  display: inline-block;
+  border: none;
+  margin: 0;
+  background: transparent;
+  text: {
+    decoration: none;
+  }
+  cursor: pointer;
+  transition: background 250ms ease-in-out, 
+    transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:hover, :focus {
+    background: rgba($white, 0.1);
+  }
+  &:focus {
+    outline: 1px solid rgba($black, 0.1);
+  }
+  &:active {
+    transform: scale(0.99);
+  }
+  
+}
+.element_disabled {
+  opacity: 0.65;
+}
+.element_hidden {
+  opacity: 0;
+}
+
+.Header {
+  background-color: $header-background;
+  position: fixed;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: $headerHeight;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: calc(18px + 2vmin);
+  color: $header-text-color;
+  text-align: center;
+}
+
+.Header-column {
+  position: relative;
+  width: 33.4vw;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0;
+}
+.appId {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  width: 30vw;
+  font: {
+    family: Roboto Condensed;
+    top: 0;
+    style: normal;
+    weight: 300;
+    size: calc(14px + 0.5vh);
+  }
+  text-align: left;
+}
+.appId-title {
+  position: relative;
+  margin: 0;
+  font: {
+    size: calc(16px + 0.5vh);
+    weight: 700;
+  }
+}
+.appId-description {
+  position: relative;
+  margin: 0;
+  margin-top: 4px;
+  width: 70%;
+  font: {
+    size: calc(16px + 0.3vh);
+    weight: 300;
+  }
+}
+.appId-description-divider {
+  height: 1px;
+  margin-top:8px;
+  margin-bottom:8px;
+  background-color: rgba($header-text-color, 0.6);
+}
+.Header-column-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 1;
+  transform: none;
+  transition: $defaultAllTransition;
+  // transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  // transition: all 300ms ease-out;
+  // -webkit-transition: all 300ms ease-out;
+  //   -moz-transition: all 300ms ease-out;
+  //   -o-transition: all 300ms ease-out;
+  //   transition: all 300ms ease-out;
+
+}
+.Header-column-top-middle {
+  height: calc(36vh - 12.5vh);
+}
+.hidden_up {
+  transform: translateY(-3vh);
+  opacity: 0;
+}
+.appear_down {
+  transform: none;
+  opacity: 1;
+}
+.hidden_down {
+  transform: translateY(7.5vh);
+  opacity: 0;
+}
+.appear_up {
+  transform: none;
+  opacity: 1;
+}
+.Header-column-infoButton {
+  height: 3.6vh;
+  padding: 0;
+  font: {
+    weight: 100;
+  }
+  border-bottom: 1px solid rgba($header-text-color, 0.6);
+  color: $header-text-color;
+}
+.Header-column-info {
+  display: flex;
+  margin: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  height: 4vh;
+  justify-content: center;
+  align-items: center;
+
+  font: {
+    family: Roboto Condensed;
+    style: normal;
+    weight: 100;
+    size: 2vh;
+  }
+  text: {
+    align: center;
+    transform: uppercase;
+  }
+  line-height: 2vh;
+  background-color: transparent;
+  padding-top: 1.5vh;
+}
+.middle_column_triangle {
+  transform: none;
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 0;
+  border-top: 2vh solid $header-background;
+  border-bottom: none;
+  border-left: 16.5vw solid transparent;
+  border-right: 16.5vw solid transparent;
+}
+.Header-column-title {
+  position: relative;
+  display: flex;
+  margin: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  height: 12.5vh;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($background, 0.9);
+  color: $header-background;
+
+  font: {
+    family: Roboto Condensed;
+    style: normal;
+    weight: 100;
+    size: 3vh;
+  }
+  text: {
+    align: center;
+    transform: uppercase;
+  }
+  line-height: 3vh;
+}
+
+.Header-breadcrumbs-container {
+  height: calc(36vh - 12.5vh - 7vh);
+  border-bottom: 1px solid rgba($header-text-color, 0.6);
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+.breadcrumbs_content {
+  width: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+}
+.breadCrumb {
+  position: relative;
+  height: $breadcrumbHeight;
+
+  color: $pointer-title-color;
+  margin: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  p {
+    text-align: center;
+    
+    font: {
+      weight: 300;
+      size: 2.3vh;
+    }
+  }
+  // transition: $defaultAllTransition;
+  transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+
+  transform: none;
+
+  &:hover, :focus {
+    background: rgba($black, 0.2);
+  }
+  .breadcrumbDivCircle {
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    background-color: rgba($header-text-color, 0.6);
+    border-radius: 3px;
+  }
+  .upper_div_circle {
+    top: -3px;
+  }
+  .lower_div_circle {
+    bottom: -3px;
+  }
+}
+.current-crumb {
+  cursor: default;
+  &:hover, :focus {
+    background: transparent;
+  }
+}
+
+
+
+.Tree {
+  display: flex;
+  margin: 0;
+  margin-top: 36vh;
+  height: calc(100vh - 36vh);
+  padding: 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  overflow: hidden;
+}
+.Tree-column {
+  flex: 1;
+  width: 30vw;
+  height: 100%;
+  font-family: Roboto Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.5vh;
+  line-height: 150%;
+  overflow-y: scroll;
+  overflow-x: visible;
+  color: #216F7A;
+  scroll-behavior: smooth;
+}
+.Tree-pointer-column {
+  position: relative;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  background-color: transparent;
+}
+.Tree-package-column {
+  position: relative;
+  padding-top: 8px;
+  padding-bottom: 32px;
+  background-color: $header-text-color;
+
+  // background-color: $pointer-background;
+}
+.dependency-list-container {
+  scroll-behavior: smooth;
+
+}
+.Dependency-content {
+  transition: $defaultAllTransition;
+}
+.RootPointer {
+  position: relative;
+  margin: 16px;
+}
+.Package {
+  top: 0;
+  left: 0;
+}
+.Package-header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.Package-dependency-connector {
+  height: 2px;
+  width: 8px;
+  background-color: $header-text-color;
+}
+.Package-dependency-connector-knob {
+  height: 6px;
+  width: 6px;
+  background-color: $header-text-color;
+  border-radius: 3px;
+}
+.left-connector-knob {
+  margin-left: 1px;
+}
+.right-connector-knob {
+  margin-right: 1px;
+}
+.Package-dependency-horisConnector {
+  position: absolute;
+  height: 2px;
+  width: 8px;
+  background-color: $black; // $header-text-color;
+}
+.Package-dependency-vertConnector {
+  position: absolute;
+  width: 2px;
+  background-color: $black; // $header-text-color;
+}
+
+.Package-title {
+  width: calc(100% - 16px);
+  background-color: $header-text-color;
+  padding: 24px;
+  margin-left: 14px;
+  margin-right: 14px;
+  font: {
+    weight: 100;
+    size: 2.4vh;
+  }
+  line-height: 100%;
+  color: $package-title-color;
+
+  display: flex;
+  align-items: center;
+}
+
+.Package-title-button {
+  width: calc(100% - 28px);
+  margin: 16px;
+
+  margin-left: 14px;
+  margin-right: 14px;
+  padding: 24px;
+  background-color: #6EC1CE;
+  color: $pointer-title-color;
+  display: flex;
+  align-items: center;
+
+  font: {
+    weight: 100;
+    size: 2.4vh;
+  }
+  text: {
+    align: left;
+  }
+  &:hover, :focus {
+    background: #7ccfdb;
+  }
+  &:focus {
+    outline: 1px solid #4d99a5;
+  }
+
+}
+
+.packageIcon {
+  width: 3vh;
+  height: 3vh;
+  margin-right: 16px;
+
+  fill: whitesmoke;
+}
+
+
+.Package-description {
+  max-height: calc(48vh);
+  margin-left: 24px;
+  margin-right: 24px;
+  padding: 24px;
+  padding-top: 16px;
+  padding-bottom: 24px;
+
+  overflow-y: scroll;
+
+  color: $pointer-title-color;
+  background-color: $pointer-background;
+}
+.Package-description-content {
+  overflow: hidden;
+  p {
+    font: {
+      family: Roboto Condensed;
+      weight: 700;
+      size: 1.5vh;
+    }
+    line-height: 150%;
+  }
+}
+
+
+.Pointer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 16px;
+  margin-right: 0;
+}
+.Pointer-rev-dependency {
+  margin-right: 16px;
+  margin-left: 0;
+}
+.Pointer-title {
+  // width: calc(100% - 16px);
+  width: calc(100% - 3vh);
+
+  background-color: $pointer-background;
+  padding: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font: {
+    weight: 100;
+    size: 1.8vh;
+  }
+  text: {
+    align: center;
+  }
+  line-height: 100%;
+  color: $pointer-title-color;
+
+  display: flex;
+  align-items: center;
+}
+
+.Pointer-title-button {
+
+  background-color: #6EC1CE;
+  color: $pointer-title-color;
+  display: flex;
+  align-items: center;
+
+  &:hover, :focus {
+    background: #7ccfdb;
+  }
+  &:focus {
+    outline: 1px solid #4d99a5;
+  }
+
+}
+.Pointer-title-opened {
+  background-color: $header-text-color;
+  color: $package-title-color;
+  &:hover, :focus {
+    background: rgba(#7ccfdb, 0.3);
+  }
+}
+.Pointer-title-disabled {
+  background-color: #6EC1CE;
+  color: $pointer-title-color;
+}
+.pointerIcon {
+  width: 2.6vh;
+  height: 2.6vh;
+  margin-right: 12px;
+
+  fill: whitesmoke;
+}
+
+.dependency-connector {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 1vh;
+  height: 100%;
+  width: 3vh;
+  border-left: solid 1vh $header-text-color;
+  // background-color: rgba($header-text-color, 0.4);
+}
+.rev-dependency-connector {
+  right: default;
+  left: 1vh;
+  border-left: none;
+  border-right: solid 1vh $header-text-color;
+}
+
+.Pointer-dependency-connector {
+  height: 2px;
+  width: 28px;
+  background-color: $header-text-color;
+}
+.Pointer-dependency-connector-knob {
+  height: 6px;
+  width: 6px;
+  background-color: $header-text-color;
+  border-radius: 3px;
+}
+
+
+.pointerArrow {
+  height: 4vh;
+}
+.rev-dependency-pointerArrow {
+
+}
