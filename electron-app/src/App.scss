@@ -11,16 +11,33 @@ $headerHeight: 36vh;
 $breadcrumbHeight: 7.5vh;
 $defaultAllTransition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 
-
+::-webkit-scrollbar {
+  // display: none;
+  background-color: rgba($header-text-color, 0.2);
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  // display: none;
+  background-color: transparent;
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: $header-text-color;
+}
 // .customized-scrollbar {
 //   scrollbar-width: thin;
 //   scrollbar-color: $header-text-color $pointer-background;
 // }
+// .customized-scrollbar::-webkit-scrollbar {
+//   // display: none;
+//   // background-color: $pointer-background;
+// }
 // .customized-scrollbar::-webkit-scrollbar-thumb {
-//   color: $pointer-background;
+//   color: $pointer-title-color;
 // }
 // .customized-scrollbar::-webkit-scrollbar-track {
-//   background-color: transparent;
+//   background-color: $header-text-color;
 // }
 
 .App {

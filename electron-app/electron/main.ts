@@ -6,7 +6,7 @@ import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-insta
 let win: BrowserWindow | null = null;
 
 
-function createWindow() {
+async function createWindow() {
   win = new BrowserWindow({
     width: 1440,
     height: 1024,
@@ -18,7 +18,7 @@ function createWindow() {
   })
   
   if (isDev) {
-    win.loadURL('http://localhost:3000/index.html');
+    await win.loadURL('http://localhost:3000/index.html');
   } else {
     // 'build/index.html'
     win.loadURL(`file://${__dirname}/../index.html`);

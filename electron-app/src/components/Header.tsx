@@ -60,8 +60,8 @@ class Header extends React.Component <{appState: AppState, homeClickHandler: () 
 				<div className="Header-column">
 						<div className={currentPackage && breadcrumbs.length > 0 ? "Header-column-top Header-column-top-middle appear_up" : "Header-column-top Header-column-top-middle hidden_down"}>
 							<button className="Header-column-infoButton element_button" onClick={this.props.homeClickHandler}>Reset to root</button>
-							<div className="Header-breadcrumbs-container" ref={this.crumbContainer}>
-								<div className="breadcrumbs_content" ref={this.crumbContent}>
+							<div className="Header-breadcrumbs-container customized-scrollbar" ref={this.crumbContainer}>
+								<div className="breadcrumbs_content customized-scrollbar" ref={this.crumbContent}>
 									{breadcrumbs.map((crumb: Pointer, indx: number) => {
 										return <button key={indx} className={ indx === breadcrumbs.length-1 ? "breadCrumb element_button current-crumb" : "breadCrumb element_button"} onClick={this.crumbButtonFactory(indx)}>
 											<div className="breadcrumbDivCircle upper_div_circle"/>
