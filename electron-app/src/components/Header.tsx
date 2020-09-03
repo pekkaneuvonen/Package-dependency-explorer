@@ -47,7 +47,7 @@ class Header extends React.Component <{appState: AppState, homeClickHandler: () 
 						<p className="appId-title">Package Dependency Explorer</p>
 						<p className="appId-description">for Debian and Ubuntu systems</p>
 						<div className="appId-description appId-description-divider"/>
-						<p className="appId-description">Sample project for exercising desktop app developmant and production.</p>
+						<p className="appId-description">Sample project for exercising desktop app development and production.</p>
 					</div>
 
 
