@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react'
+// import { observer } from 'mobx-react';
 
 import './Explorer.scss';
 
@@ -8,37 +9,37 @@ import PackageView from './components/PackageView';
 import { tempHCmock } from './assets/Sample';
 import PackageTree, { Pointer } from './model/PackageTree';
 
-const appState = new AppState();
-
 function Explorer() {
+  const appState = useContext(AppState);
+
   const [rootData, setRootData] = useState("");
 
   useEffect(() => {
     appState.setPackageTree(new PackageTree(rootData));
-  }, [ rootData ]);
+  }, [ rootData, appState ]);
 
   if (!rootData) {
     setRootData(tempHCmock);
   }
 
   const homeClickHandler = () => {
-    console.log("homeClickHandler : ");
+    // console.log("homeClickHandler : ");
     appState.updateCurrentPackage(undefined);
   }
   const crumbClickHandler = (crumbIndx: number) => {
-    console.log("crumbClicHandler : ", crumbIndx, " ( ", appState.breadcrumbs[crumbIndx], " ) ");
+    // console.log("crumbClicHandler : ", crumbIndx, " ( ", appState.breadcrumbs[crumbIndx], " ) ");
     appState.cutToBreadcrumb(crumbIndx);
   }
   const packageClickHandler = (packagePointer: Pointer) => {
-    console.log("packageClickHandler : ", packagePointer);
+    // console.log("packageClickHandler : ", packagePointer);
     appState.updateCurrentPackage(packagePointer);
   }
 
   
   return (
     <div className="Explorer">
-      <Header appState={appState} homeClickHandler={homeClickHandler} crumbClickHandler={crumbClickHandler} />
-      <PackageView appState={appState} packageClickHandler={packageClickHandler} />
+      <Header homeClickHandler={homeClickHandler} crumbClickHandler={crumbClickHandler} />
+      <PackageView packageClickHandler={packageClickHandler} />
     </div>
   )
  
